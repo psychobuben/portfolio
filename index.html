@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jan Konrád – Portfolio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('Background.jpeg');
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+    }
+    .about-text {
+  text-align: center;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  
+  max-width: 800px;
+
+}
+.profile-section {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.about-text {
+  text-align: center;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  max-width: 800px;
+  max-height: 300px; /* Nebo dle potřeby */
+  overflow-y: auto;
+  margin: auto;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+.about-text p {
+  margin-bottom: 1.5rem;
+  
+}
+    .section1 {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+
+    .section2 {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+    
+
+    .content-box {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+   
+
+    .content-box img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    p {
+      line-height: 1.6;
+      color: #333;
+    }
+
+    /* HAMBURGER MENU */
+    #menu-toggle {
+      display: none;
+    }
+
+    .hamburger {
+      font-size: 30px;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 50%;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: right 0.3s ease;
+      z-index: 1000;
+    }
+
+    .mobile-nav ul {
+      list-style: none;
+      text-align: center;
+    }
+
+    .mobile-nav li {
+      margin: 20px 0;
+    }
+
+    .mobile-nav a {
+      text-decoration: none;
+      font-size: 22px;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-nav a:hover {
+      color: #007bff;
+    }
+
+    #menu-toggle:checked + .hamburger + .mobile-nav {
+      right: 0;
+    }
+
+    /* GALERIE */
+    .gallery {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.7);
+      scroll-snap-type: x mandatory;
+    }
+
+    .gallery-item {
+      flex: 0 0 auto;
+      width: 220px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      scroll-snap-align: start;
+      text-align: center;
+    }
+
+    .gallery::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .gallery::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .gallery-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .arrow {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: none;
+      font-size: 0.7rem;
+      padding: 10px 15px;
+      cursor: pointer;
+      z-index: 1;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      transition: background-color 0.2s;
+    }
+
+    .arrow:hover {
+      background-color: rgba(220, 220, 220, 0.9);
+    }
+
+    .arrow.left {
+      position: absolute;
+      left: -25px;
+    }
+
+    .arrow.right {
+      position: absolute;
+      right: -25px;
+    }
+
+    /* FORMULÁŘ */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      text-align: left;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+      overflow: auto;
+    }
+
+    textarea {
+      min-height: 100px;
+      max-height: 200px;
+    }
+
+    input {
+      height: 40px;
+    }
+
+    .btn-submit {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+    #profile-box {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+      max-height: calc(100vh - 80px);
+  
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin: 20px;
+}
+
+#profile-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;   /* zachová poměr stran */
+}
+
+    
+  </style>
+</head>
+<body>
+
+  <input type="checkbox" id="menu-toggle" />
+  <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+  <nav class="mobile-nav">
+    <ul>
+      <li><a href="#1">Úvod</a></li>
+      <li><a href="#2">Projekty</a></li>
+      <li><a href="#3">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <!-- Úvod -->
+  <section class="section1" id="1">
+    <div id="profile-box">
+      <img src="./ProfilImage.png" alt="Profilová fotografie">
+      <h2>Jan Konrád</h2>
+    </div>
+
+ 
+     
+  
+      <div class="about-text" id="autoScrollBox">
+      
+         <p>
+          Jsem <strong>středoškolský učitel informatiky</strong> s vášní pro <strong>inovaci a kreativní přístup k výuce</strong>. 
+          Využívám <strong>moderní technologie</strong> a <strong>projektově orientovanou výuku</strong>, 
+          abych studentům přiblížil <strong>reálné využití informatiky</strong> a pomohl jim rozvíjet 
+          <strong>dovednosti budoucnosti</strong>.
+        </p>
+  
+        <p>
+          Mimo pedagogickou praxi se aktivně věnuji <strong>vývoji her</strong>, zejména v oblasti 
+          <strong>nezávislých (indie) multiplayerových webových projektů</strong>. 
+          Baví mě experimentovat s <strong>herními mechanikami</strong>, 
+          <strong>sítí</strong> a <strong>tím, jak vytvořit poutavý zážitek přímo ve webovém prohlížeči</strong>.
+        </p>
+  
+        <p>
+          Dalším z mých zájmů je <strong>3D grafika</strong>, ve které spojuji <strong>technické znalosti 
+          s výtvarným cítěním</strong>. Využívám ji nejen při tvorbě her, ale i jako nástroj, 
+          kterým studentům ukazuji <strong>propojení mezi programováním, designem a uměním</strong>.
+        </p>
+  
+        <p>
+          Věřím, že <strong>informatika je nástroj pro vyjádření nápadů a tvorbu budoucnosti</strong> – 
+          a přesně to se snažím předávat dál.
+        </p>
+       
+        </div>
+        
+    
+      
+    
+
+  </section>
+
+  <!-- Projekty -->
+  <section class="section2" id="2">
+    <div class="content-box">
+      <h2>Projekty</h2>
+      <div class="gallery-wrapper">
+        <button class="arrow left" onclick="scrollGallery(-300)">←</button>
+        <div class="gallery" id="gallery">
+          <div class="gallery-item">
+            <img src="./KonryGames.jpeg" alt="KonryGames">
+            <h3>KonryGames.com</h3>
+            <p>Multiplayerové webové hry...</p>
+          </div>
+          <div class="gallery-item">
+            <img src="./projekt2.jpeg" alt="Název projektu 2">
+            <h3>Název projektu 2</h3>
+            <p>Popis druhého projektu.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="./projekt3.jpeg" alt="Název projektu 3">
+            <h3>Název projektu 3</h3>
+            <p>Popis třetího projektu.</p>
+          </div>
+        </div>
+        <button class="arrow right" onclick="scrollGallery(300)">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section class="section2" id="3">
+    <div class="content-box">
+      <h2>Kontaktní formulář</h2>
+      <form action="">
+        <div class="form-group">
+          <label for="name">Jméno</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Zpráva</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Odeslat</button>
+      </form>
+    </div>
+  </section>
+  <script src="./autoscroll.js"></script>
+
+  <script>
+    function scrollGallery(offset) {
+      const gallery = document.getElementById('gallery');
+      gallery.scrollBy({
+        left: offset,
+        behavior: 'smooth'
+      });
+    }
+    
+  </script>
+  <script>
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('menu-toggle').checked = false;
+      });
+    });
+  </script>
+  
+
+</body>
+</html>
