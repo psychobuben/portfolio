@@ -14,15 +14,15 @@ window.addEventListener('DOMContentLoaded', () => {
             stopScrolling();
             isPausedForReset = true;
 
-            // Okamžitý návrat nahoru (bez smooth pro kompatibilitu s iOS)
-            scrollBox.scrollTop = 0;
-
+            // Zpožděné navrácení nahoru
             setTimeout(() => {
-              isPausedForReset = false;
-              startScrolling();
-            }, 1000);
+              scrollBox.scrollTop = 0;
+              setTimeout(() => {
+                isPausedForReset = false;
+                startScrolling();
+              }, 1000); // druhé zpoždění po scrollTo
+            }, 6000); // pauza před návratem
           } else {
-            // Jednoduché přičítání funguje spolehlivě i na iOS
             scrollBox.scrollTop += 1;
           }
         }, 30);
@@ -34,17 +34,23 @@ window.addEventListener('DOMContentLoaded', () => {
       scrollInterval = null;
     };
 
-    // Spustit scroll na začátku
+    // Spustit scrollování
     startScrolling();
 
-    // Přerušit scroll při interakci
-    scrollBox.addEventListener('mouseenter', stopScrolling);
-    scrollBox.addEventListener('mouseleave', () => {
+    // Detekce interakce na PC i mobilu
+    const pauseHandler = () => {
+      stopScrolling();
+    };
+
+    const resumeHandler = () => {
       if (!isPausedForReset) startScrolling();
-    });
-    scrollBox.addEventListener('mousedown', stopScrolling);
-    scrollBox.addEventListener('mouseup', () => {
-      if (!isPausedForReset) startScrolling();
-    });
+    };
+
+    scrollBox.addEventListener('mouseenter', pauseHandler);
+    scrollBox.addEventListener('mouseleave', resumeHandler);
+    scrollBox.addEventListener('mousedown', pauseHandler);
+    scrollBox.addEventListener('mouseup', resumeHandler);
+    scrollBox.addEventListener('touchstart', pauseHandler);
+    scrollBox.addEventListener('touchend', resumeHandler);
   }
 });
