@@ -11,19 +11,19 @@ window.addEventListener('DOMContentLoaded', () => {
             Math.ceil(scrollBox.scrollTop + scrollBox.clientHeight) >= scrollBox.scrollHeight;
 
           if (isAtBottom) {
-            // Zastav scrollování a připrav se na návrat nahoru
             stopScrolling();
             isPausedForReset = true;
 
-            scrollBox.scrollTo({ top: 0, behavior: 'smooth' });
+            // Okamžitý návrat nahoru (bez smooth pro kompatibilitu s iOS)
+            scrollBox.scrollTop = 0;
 
-            // Počkáme, až scroll skutečně doběhne (čas lze upravit)
             setTimeout(() => {
               isPausedForReset = false;
-              startScrolling(); // znovu spustíme scroll
+              startScrolling();
             }, 1000);
           } else {
-            scrollBox.scrollBy({ top: 1, behavior: 'smooth' });
+            // Jednoduché přičítání funguje spolehlivě i na iOS
+            scrollBox.scrollTop += 1;
           }
         }, 30);
       }
