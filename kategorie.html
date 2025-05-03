@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projekty</title>
+  <style>
+    .category, .subcategory {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #ccc;
+      cursor: pointer;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .project-item {
+      margin: 20px 0;
+    }
+ 
+  </style>
+</head>
+<body>
+  <section id="category-section">
+    <div class="category" data-category="Modelování">Modelování</div>
+    <div class="category" data-category="Render">Render</div>
+    <div class="category" data-category="Animace">Animace</div>
+    
+  </section>
+
+  <section class="subcategory-container" id="subcategory-Modelování" style="display: none;">
+    <div class="subcategory" data-sub="Auta">Auta</div>
+    <div class="subcategory" data-sub="Postavy">Postavy</div>
+    <div class="subcategory" data-sub="">Postavy</div>
+    <button class="close">Zpět</button>
+  </section>
+
+  <section class="subcategory-container" id="subcategory-Render" style="display: none;">
+    <div class="subcategory" data-sub="Artwork">Artwork</div>
+    <div class="subcategory" data-sub="Sceny">Sceny</div>
+    <div class="subcategory" data-sub="">Postavy</div>
+    <button class="close">Zpět</button>
+  </section>
+
+  <section id="projects" style="display: none;">
+    <h2 id="project-title"></h2>
+    <div id="project-list"></div>
+    <button class="back">Zpět</button>
+  </section>
+
+  <script>
+    const categories = document.querySelectorAll('.category');
+    const projectContainer = document.getElementById('projects');
+    const projectTitle = document.getElementById('project-title');
+    const projectList = document.getElementById('project-list');
+    const categorySection = document.getElementById('category-section');
+    const subcategorySection = document.getElementById('subcategory-Modelování');
+    
+    const closeBtn = document.querySelector('.close');
+    const backBtn = document.querySelector('.back');
+
+    const projectDataModelovani = {
+      'Auta': [
+        { title: 'Škoda 120', image: 'img/skoda120.jpg' },
+        { title: 'Závodní auto', image: 'img/racecar.jpg' }
+      ],
+      'Postavy': [
+        { title: 'Robot', image: 'img/robot.jpg' },
+        { title: 'Postava s helmou', image: 'img/helmet.jpg' }
+      ]
+    };
+
+    const projectDataRender = [
+      { title: 'render1', image: 'img/render.jpg' }
+    ];
+
+    const projectDataAnimace = [
+        { title: 'Animace1', image: 'img/animace1.jpg'}
+    ]
+
+    const projectData = {
+      'Modelování': projectDataModelovani,
+      'Render': projectDataRender,
+      'Animace': projectDataAnimace
+    };
+
+    let currentMainCategory = null;
+
+    categories.forEach(category => {
+      category.addEventListener('click', () => {
+        const cat = category.getAttribute('data-category');
+        currentMainCategory = cat;
+
+        if (cat === 'Modelování') {
+          categorySection.style.display = 'none';
+          subcategorySection.style.display = 'flex';
+        } else if (Array.isArray(projectData[cat])) {
+          categorySection.style.display = 'none';
+          projectTitle.textContent = cat;
+          projectList.innerHTML = '';
+
+          projectData[cat].forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'project-item';
+            div.innerHTML = `<strong>${item.title}</strong><br><img src="${item.image}" alt="${item.title}" width="200">`;
+            projectList.appendChild(div);
+          });
+
+          projectContainer.style.display = 'block';
+        }
+      });
+    });
+
+    // Kliknutí na podkategorii Modelování
+    document.querySelectorAll('#subcategory-Modelování .subcategory').forEach(sub => {
+      sub.addEventListener('click', () => {
+        const subCat = sub.getAttribute('data-sub');
+        projectTitle.textContent = subCat;
+        projectList.innerHTML = '';
+
+        projectDataModelovani[subCat].forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'project-item';
+          div.innerHTML = `<strong>${item.title}</strong><br><img src="${item.image}" alt="${item.title}" width="200">`;
+          projectList.appendChild(div);
+        });
+
+        subcategorySection.style.display = 'none';
+        projectContainer.style.display = 'block';
+      });
+    });
+
+    // Zpět z podkategorií na hlavní kategorie
+    closeBtn.addEventListener('click', () => {
+      subcategorySection.style.display = 'none';
+      categorySection.style.display = 'flex';
+    });
+
+    // Zpět z projektů
+    backBtn.addEventListener('click', () => {
+      projectContainer.style.display = 'none';
+
+      if (currentMainCategory === 'Modelování') {
+        subcategorySection.style.display = 'flex';
+      } else {
+        categorySection.style.display = 'flex';
+      }
+    });
+  </script>
+</body>
+</html>
